@@ -7,7 +7,7 @@ import Home from './components/screens/Home'
 import Profile from './components/screens/Profile'
 import Signin from './components/screens/Signin'
 import Signup from './components/screens/Signup'
-import createPost from './components/screens/createPost'
+import CreatePost from './components/screens/CreatePost'
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
       <Route exact path='/profile' component={Profile} />
       <Route exact path='/signin' component={Signin} />
       <Route exact path='/signup' component={Signup} />
-      <Route exact path='/createPost' component={createPost} />
+      <Route exact path='/createPost' component={CreatePost} />
       </BrowserRouter>
       
     </div>

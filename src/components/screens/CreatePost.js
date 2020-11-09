@@ -1,7 +1,33 @@
-import React from "react";
+import React , {useState} from "react";
+import {useHistory} from "react-router-dom"
+
+const CreatePost = () => {
+    const history = useHistory()
+    const [title,setTitle] = useState("")
+    const [body,setBody] = useState("")
+
+    fetch("/createPost",{
+        method:"post",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            title,
+            body
+        })
+    }).then(res => res.json())
+    .then(data => {
+        if(data.error){
+            console.log(data.error)
+        }
+        else(
+            console.log(data.message)
+        )
+    }).catch(err => {
+        console.log(err)
+    })
 
 
-const createPost = () => {
     return (
         
          <div className="card  input-field" 
@@ -14,10 +40,14 @@ const createPost = () => {
                 <input
                 type="text"
                 placeholder="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 />
                 <input
                 type="text"
                 placeholder="body"
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
                 />
                 <div className="file-field input-field">
                     <span>Upload Image</span>
@@ -33,4 +63,4 @@ const createPost = () => {
     )
 }
 
-export default createPost;
+export default CreatePost;
