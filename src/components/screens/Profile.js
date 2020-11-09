@@ -6,7 +6,7 @@ const Profile = () => {
         <div className="profileTop" style={{width:"100%"}}>
         <div className="profile">
             <div className="profile-text">
-                <img class="profile-image" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"></img>
+                <img className="profile-image" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"></img>
                 <div>
                     <h5>Hazal Küçükay</h5>
                     <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
