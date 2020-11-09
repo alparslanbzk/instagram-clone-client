@@ -15,7 +15,7 @@ const Signin = () => {
         fetch("/signin",{
             method:"post",
             headers: {
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
             },
             body: JSON.stringify({
                 email,
@@ -28,7 +28,8 @@ const Signin = () => {
                 console.log(data.error)
             }
             else {
-                console.log(data.token)
+                localStorage.setItem("jwt",data.token)
+                localStorage.setItem("user",JSON.stringify(data.user))
             }
         })
     }
