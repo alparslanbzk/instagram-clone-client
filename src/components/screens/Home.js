@@ -15,7 +15,7 @@ const Home = () => {
                 //console.log(result.posts[0].title)
                 setData(result.posts)
             })
-    }, [])
+    }, [data])
 
     const likePost = (id) => {
         
@@ -38,7 +38,7 @@ const Home = () => {
                     return item
                 }
             })
-
+            console.log(newData)
             setData(newData)
         }).catch(err=>{
             console.log(err)
@@ -59,7 +59,35 @@ const Home = () => {
         }).then(res=>res.json())
         .then(result=> {
 
-            //console.log(result)
+            console.log(result)
+            const newData = data.map(item=> {
+                if(item._id==result._id){
+                    return result
+                }else {
+                    return item
+                }
+            })
+            console.log(newData)
+            setData(newData)
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+
+    const makeComment = (text,postId) => {
+        fetch("/comment",{
+            method:"put",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+localStorage.getItem("jwt")
+            },
+            body:JSON.stringify({
+                text,
+                postId
+            })
+        }).then(res=>res.json())
+        .then(result => {
+            console.log(result)
             const newData = data.map(item=> {
                 if(item._id==result._id){
                     return result
@@ -69,8 +97,6 @@ const Home = () => {
             })
 
             setData(newData)
-        }).catch(err=>{
-            console.log(err)
         })
     }
 
@@ -94,7 +120,20 @@ const Home = () => {
                                 <h6>{item.likes.length}</h6>
                                 <h6>{item.title}</h6>
                                 <p>{item.body}</p>
-                                <input type="text" placeholder="add a comment" />
+                                {item.comments.map(record=>{
+                                   return (
+                                   <p>
+                                    <a style={{fontWeight:"500"}} href="#">{record.postedBy.name}</a>
+                                       <span >{record.text}</span> 
+                                   </p>)
+                                })}
+                                <form onSubmit={(e) => {
+                                    e.preventDefault()
+                                    makeComment(e.target[0].value,item._id)
+                                }}>
+                                    <input type="text" placeholder="add a comment" />
+                                </form>
+                                
                             </div>
                         </div>
                     )
