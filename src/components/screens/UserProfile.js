@@ -7,8 +7,6 @@ const Profile = () => {
     const [userProfile,setProfile] = useState(null)
     const {state,dispatch} = useContext(UserContext)
     const {userid} = useParams()
-    console.log(userid)
-    console.log(userProfile)
     
 
     useEffect(()=>{
@@ -18,12 +16,44 @@ const Profile = () => {
             }
         }).then(res=>res.json())
         .then(result=>{
-            console.log(result)
+            //console.log(result)
           
              setProfile(result)
              console.log(userProfile)
         })
      },[])
+
+     const followUser = () => {
+         fetch("/follow",{
+             method:"put",
+             headers:{
+                  "Content-Type":"application/json",
+                  "Authorization":localStorage.getItem("jwt")  
+             },
+             body:JSON.stringify({
+                 followId:userid
+             })
+         }).then(res=>res.json())
+         .then(data => {
+             console.log(data)
+             dispatch({type:"UPDATE",payload:{following:data.following,followers:data.followers}})
+             localStorage.setItem("user",JSON.stringify(data))
+
+             setProfile((prevState)=>{
+                return {
+                    ...prevState,
+                    user:{
+                        ...prevState.user,
+                        followers:[...prevState.user.followers,data._id]
+                       }
+                }
+            })
+         })
+     }
+
+
+
+
 
     return (
         userProfile ? 
@@ -35,9 +65,23 @@ const Profile = () => {
                     <h5 >{userProfile.user.name}</h5>
                     <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
                         <span>{userProfile.posts.length} posts</span>
-                        <span>40 followers</span>
-                        <span>40 following</span>
+                        <span>{userProfile.user.followers.length} followers</span>
+                        <span>{userProfile.user.following.length} following</span>
                     </div>
+
+
+                   
+                   <button style={{
+                       margin:"10px"
+                   }} className="btn waves-effect waves-light #64b5f6 blue darken-1"
+                    onClick={()=>followUser()}
+                    >
+                        Follow
+                    </button>
+                    
+                    
+
+
                 </div>
 
             </div>
