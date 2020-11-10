@@ -7,6 +7,7 @@ import Profile from './components/screens/Profile'
 import Signin from './components/screens/Signin'
 import Signup from './components/screens/Signup'
 import CreatePost from './components/screens/CreatePost'
+import UserProfile from './components/screens/UserProfile'
 import {reducer,initialState} from './reducers/userReducer'
 
 
@@ -20,7 +21,7 @@ const Routing = ()=>{
     const user = JSON.parse(localStorage.getItem("user"))
     if(user){
       dispatch({type:"USER",payload:user})
-      history.push('/')
+      
     }else{
       history.push('/signin')
     }
@@ -33,6 +34,7 @@ const Routing = ()=>{
       <Route exact path='/signin' component={Signin} />
       <Route exact path='/signup' component={Signup} />
       <Route exact path='/createPost' component={CreatePost} />
+      <Route exact path='/profile/:userid' component={UserProfile} />
     </Switch>
   )
 
