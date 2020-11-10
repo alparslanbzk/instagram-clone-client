@@ -11,7 +11,7 @@ const Home = () => {
             }
         }).then(res => res.json())
             .then(result => {
-                console.log(result.posts)
+                //console.log(result.posts[0].title)
                 setData(result.posts)
             })
     }, [])
