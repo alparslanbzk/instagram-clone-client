@@ -9,8 +9,10 @@ const NavBar = () => {
     const RenderList = () => {
         if(state) {
             return [
+                
                 <li key="1"><Link to="/profile">Profile</Link></li>,
                 <li key="2"><Link to="/createPost">Create Post</Link></li>,
+                <li key="6"><Link to="/myfollowingpost">My Following Posts</Link></li>,
                 <li key="5">
                     <button className="btn waves-effect waves-light" onClick={() => {
                         localStorage.clear()
