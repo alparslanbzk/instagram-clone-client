@@ -100,13 +100,41 @@ const Home = () => {
         })
     }
 
+    const deletePost = (postid) => {
+        fetch(`/deletepost/${postid}`,{
+            method:"delete",
+            headers:{
+                Authorization:"Bearer "+localStorage.getItem("jwt")
+            }
+        }).then(res=>res.json())
+        .then(result => {
+            console.log(result)
+            const newData = data.filter(item=> {
+                if(item._id !== result._id){
+                    return result
+                }else {
+                    return item
+                }
+            })
+
+            setData(newData)
+        })
+    }
+
     return (
         <div className="home">
             {
                 data.map(item => {
                     return (
-                        <div className="card home-card" key={item._id}>
-                            <h5>{item.postedBy.name}</h5>
+                        <div className="card home-card" key={item._id} style={{width:"70%"}}>
+                            <h5>{item.postedBy.name} {item.postedBy._id == state._id 
+                            && <i className="material-icons" style={{
+                                float:"right"
+                            }}
+                            onClick={()=> deletePost(item._id)} 
+                            >delete</i>
+                
+                            }</h5>
                             <div className="card-image">
                                 <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"></img>
                             </div>
